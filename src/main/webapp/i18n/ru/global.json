@@ -9,6 +9,7 @@
                 "main": "Справочники",
                 "service": "Услуги",
                 "request": "Request",
+                "requestService": "Request Service",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
