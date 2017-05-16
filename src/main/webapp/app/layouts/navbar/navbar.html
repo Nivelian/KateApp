@@ -67,13 +67,13 @@
          	</ul>
          	<ul class="nav navbar-nav navbar-nav-center">
          		<li ui-sref-active="active" ng-switch-when="true">
-                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                    <a ui-sref="request" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm" data-translate="global.menu.home">Home</span>
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('service')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -90,12 +90,12 @@
                                     <span data-translate="global.menu.entities.service">Service</span>
                                 </a>
                             </li>
-                        <li ui-sref-active="active">
+                        <!-- <li ui-sref-active="active">
                                 <a ui-sref="request" ng-click="vm.collapseNavbar()">
                                     <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                     <span data-translate="global.menu.entities.request">Request</span>
                                 </a>
-                            </li>
+                            </li> -->
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
                 </li>
