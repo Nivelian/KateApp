@@ -2,35 +2,41 @@ package com.kate.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class RequestServiceId implements Serializable {
 	private static final long serialVersionUID = -5182930776321592367L;
 	
-	private Long request;
+	@Column(name = "request_id")
+	private Long requestId;
 	
-	private Long service;
+	@Column(name = "service_id")	
+	private Long serviceId;
 
-	public Long getRequest() {
-		return request;
+	public Long getRequestId() {
+		return requestId;
 	}
 
-	public void setRequest(Long request) {
-		this.request = request;
+	public void setRequestId(Long requestId) {
+		this.requestId = requestId;
 	}
 
-	public Long getService() {
-		return service;
+	public Long getServiceId() {
+		return serviceId;
 	}
 
-	public void setService(Long service) {
-		this.service = service;
+	public void setServiceId(Long serviceId) {
+		this.serviceId = serviceId;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
-		result = prime * result + ((service == null) ? 0 : service.hashCode());
+		result = prime * result + ((requestId == null) ? 0 : requestId.hashCode());
+		result = prime * result + ((serviceId == null) ? 0 : serviceId.hashCode());
 		return result;
 	}
 
@@ -43,22 +49,22 @@ public class RequestServiceId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RequestServiceId other = (RequestServiceId) obj;
-		if (request == null) {
-			if (other.request != null)
+		if (requestId == null) {
+			if (other.requestId != null)
 				return false;
-		} else if (!request.equals(other.request))
+		} else if (!requestId.equals(other.requestId))
 			return false;
-		if (service == null) {
-			if (other.service != null)
+		if (serviceId == null) {
+			if (other.serviceId != null)
 				return false;
-		} else if (!service.equals(other.service))
+		} else if (!serviceId.equals(other.serviceId))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "RequestServiceId [request=" + request + ", service=" + service + "]";
+		return "RequestServiceId [requestId=" + requestId + ", serviceId=" + serviceId + "]";
 	}
 
 	

@@ -2,64 +2,50 @@ package com.kate.domain;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * A RequestService.
  */
 @Entity
 @Table(name = "request_service")
-@IdClass(RequestServiceId.class)
 public class RequestService implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private Service service;
-    
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "request_id", referencedColumnName = "id")
-    @JsonBackReference
-    private Request request;
+    @EmbeddedId
+    private RequestServiceId id;
 
-	public Service getService() {
-		return service;
+	@Column(name = "square")
+	private BigDecimal square;
+
+	public RequestServiceId getId() {
+		return id;
 	}
 
-	public void setService(Service service) {
-		this.service = service;
+	public void setId(RequestServiceId id) {
+		this.id = id;
 	}
 
-	public Request getRequest() {
-		return request;
+	public BigDecimal getSquare() {
+		return square;
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
-	}
-
-	@Override
-	public String toString() {
-		return "RequestService [service=" + service + ", request=" + request + "]";
+	public void setSquare(BigDecimal square) {
+		this.square = square;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
-		result = prime * result + ((service == null) ? 0 : service.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((square == null) ? 0 : square.hashCode());
 		return result;
 	}
 
@@ -72,18 +58,23 @@ public class RequestService implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RequestService other = (RequestService) obj;
-		if (request == null) {
-			if (other.request != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!request.equals(other.request))
+		} else if (!id.equals(other.id))
 			return false;
-		if (service == null) {
-			if (other.service != null)
+		if (square == null) {
+			if (other.square != null)
 				return false;
-		} else if (!service.equals(other.service))
+		} else if (!square.equals(other.square))
 			return false;
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "RequestService [id=" + id + ", square=" + square + "]";
+	}
+	
 	
 }

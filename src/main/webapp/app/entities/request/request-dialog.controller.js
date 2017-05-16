@@ -31,6 +31,7 @@
 
         function save () {
             vm.isSaving = true;
+            vm.request.services = vm.chosenServices;
             if (vm.request.id !== null) {
                 Request.update(vm.request, onSaveSuccess, onSaveError);
             } else {

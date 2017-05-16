@@ -2,8 +2,11 @@ package com.kate.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kate.domain.Request;
+import com.kate.domain.RequestService;
+import com.kate.domain.RequestServiceId;
 import com.kate.domain.User;
 import com.kate.repository.RequestRepository;
+import com.kate.repository.RequestServiceRepository;
 import com.kate.repository.UserRepository;
 import com.kate.security.SecurityUtils;
 import com.kate.web.rest.util.HeaderUtil;
@@ -40,10 +43,13 @@ public class RequestResource {
     private final RequestRepository requestRepository;
     
     private final UserRepository userRepository;
+    
+    private final RequestServiceRepository requestServiceRepository;
 
-    public RequestResource(RequestRepository requestRepository, UserRepository userRepository) {
+    public RequestResource(RequestRepository requestRepository, UserRepository userRepository, RequestServiceRepository requestServiceRepository) {
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
+        this.requestServiceRepository = requestServiceRepository;
     }
 
     /**
@@ -70,7 +76,20 @@ public class RequestResource {
         // Set current date
         request.setLastModifiedDate(ZonedDateTime.now());
         
+        // Save request
         Request result = requestRepository.save(request);
+        
+        // Save square value in request_service table
+        request.getServices().forEach(item -> {
+        	RequestServiceId requestServiceId = new RequestServiceId();
+        	requestServiceId.setRequestId(result.getId());
+        	requestServiceId.setServiceId(item.getId());
+        	RequestService requestService = new RequestService();
+        	requestService.setId(requestServiceId);
+        	requestService.setSquare(item.getSquare());
+        	requestServiceRepository.save(requestService);
+        });
+        
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

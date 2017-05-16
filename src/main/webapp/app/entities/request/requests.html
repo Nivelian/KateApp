@@ -32,8 +32,8 @@
                     <td><a ui-sref="request-detail({id:request.id})">{{request.id}}</a></td>
                     <td>{{request.name}}</td>
                     <td>
-                    	<div ng-repeat="requestService in request.requestServices track by requestService.service.id">
-                        	<span class="label label-info">{{requestService.service.name}}</span>
+                    	<div ng-repeat="service in request.services track by service.id">
+                        	<span class="label label-info">{{service.name}}</span>
                     	</div>
                 	</td>
                 	<td>{{request.total | number: 2}}</td>

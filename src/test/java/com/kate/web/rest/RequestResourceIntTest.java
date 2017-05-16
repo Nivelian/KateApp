@@ -5,6 +5,7 @@ import com.kate.KateApp;
 import com.kate.domain.Request;
 import com.kate.domain.User;
 import com.kate.repository.RequestRepository;
+import com.kate.repository.RequestServiceRepository;
 import com.kate.repository.UserRepository;
 import com.kate.web.rest.errors.ExceptionTranslator;
 
@@ -55,6 +56,9 @@ public class RequestResourceIntTest {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private RequestServiceRepository requestServiceRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -75,7 +79,7 @@ public class RequestResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        RequestResource requestResource = new RequestResource(requestRepository, userRepository);
+        RequestResource requestResource = new RequestResource(requestRepository, userRepository, requestServiceRepository);
         this.restRequestMockMvc = MockMvcBuilders.standaloneSetup(requestResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

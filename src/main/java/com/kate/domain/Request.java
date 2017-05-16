@@ -14,13 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.BatchSize;
 
 /**
  * A Request.
@@ -50,11 +51,14 @@ public class Request implements Serializable {
     @JoinColumn(name = "last_modified_by")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "request")
-    @JsonManagedReference
-    private Set<RequestService> requestServices = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "request_service",
+               joinColumns = @JoinColumn(name="request_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="service_id", referencedColumnName="id"))
+    @BatchSize(size = 20)
+    private Set<Service> services = new HashSet<>();
 
-	public BigDecimal getTotal() {
+    public BigDecimal getTotal() {
 		return total;
 	}
 
@@ -109,24 +113,29 @@ public class Request implements Serializable {
         this.user = user;
     }
 
-    public Set<RequestService> getRequestServices() {
-        return requestServices;
+    public Set<Service> getServices() {
+        return services;
     }
 
-    public Request addRequestService(RequestService requestService) {
-        this.requestServices.add(requestService);
+    public Request services(Set<Service> services) {
+        this.services = services;
+        return this;
+    }
+
+    public Request addService(Service service) {
+        this.services.add(service);
         //service.getRequests().add(this);
         return this;
     }
 
-    public Request removeRequestService(RequestService requestService) {
-        this.requestServices.remove(requestService);
+    public Request removeService(Service service) {
+        this.services.remove(service);
         //service.getRequests().remove(this);
         return this;
     }
 
-    public void setRequestServices(Set<RequestService> requestServices) {
-        this.requestServices = requestServices;
+    public void setServices(Set<Service> services) {
+        this.services = services;
     }
 
     @Override
@@ -153,6 +162,11 @@ public class Request implements Serializable {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (services == null) {
+			if (other.services != null)
+				return false;
+		} else if (!services.equals(other.services))
+			return false;
 		if (total == null) {
 			if (other.total != null)
 				return false;
@@ -173,6 +187,7 @@ public class Request implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastModifiedDate == null) ? 0 : lastModifiedDate.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((services == null) ? 0 : services.hashCode());
 		result = prime * result + ((total == null) ? 0 : total.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
@@ -181,6 +196,6 @@ public class Request implements Serializable {
     @Override
 	public String toString() {
 		return "Request [id=" + id + ", name=" + name + ", lastModifiedDate=" + lastModifiedDate + ", total=" + total
-				+ ", user=" + user +  "]";
+				+ ", user=" + user + ", services=" + services + "]";
 	}
 }

@@ -10,8 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A Service.
@@ -38,8 +42,21 @@ public class Service implements Serializable {
     @NotNull
     @Column(name = "cost")
     private BigDecimal cost;
+    
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private BigDecimal square;
 
-    public BigDecimal getCost() {
+    public BigDecimal getSquare() {
+		return square;
+	}
+
+	public void setSquare(BigDecimal square) {
+		this.square = square;
+	}
+
+	public BigDecimal getCost() {
 		return cost;
 	}
 
@@ -110,6 +127,11 @@ public class Service implements Serializable {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (square == null) {
+			if (other.square != null)
+				return false;
+		} else if (!square.equals(other.square))
+			return false;
 		return true;
 	}
 
@@ -121,11 +143,13 @@ public class Service implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((isSquare == null) ? 0 : isSquare.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((square == null) ? 0 : square.hashCode());
 		return result;
 	}
 
     @Override
 	public String toString() {
-		return "Service [id=" + id + ", name=" + name + ", isSquare=" + isSquare + ", cost=" + cost + "]";
+		return "Service [id=" + id + ", name=" + name + ", isSquare=" + isSquare + ", cost=" + cost + ", square="
+				+ square + "]";
 	}
 }
