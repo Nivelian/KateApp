@@ -1,4 +1,4 @@
-<div ng-cloak>
+<!-- <div ng-cloak>
     <div class="row">
         <div class="col-md-4">
             <span class="hipster img-responsive img-rounded"></span>
@@ -38,4 +38,22 @@
             </p>
         </div>
     </div>
+</div> -->
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h1 class="text-center" data-translate="home.sessionClosed">Session closed</h1>
+
+            <div class="alert alert-info text-center" data-translate="home.authorize">Authorize for continuation
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-4 col-md-offset-4 text-center">
+           	<button class="btn btn-default btn-lg" ng-click="vm.login()">
+               	<span class="glyphicon glyphicon-log-in"></span>
+               	<span data-translate="home.logIn">Log In</span>
+          	</button>
+      	</div>
+   	</div>
 </div>

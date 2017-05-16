@@ -56,17 +56,17 @@
                                 <span data-translate="global.menu.account.login">Sign in</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" ng-switch-when="false">
+                        <!-- <li ui-sref-active="active" ng-switch-when="false">
                             <a ui-sref="register" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
                                 <span data-translate="global.menu.account.register">Register</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
          	</ul>
          	<ul class="nav navbar-nav navbar-nav-center">
-         		<li ui-sref-active="active">
+         		<li ui-sref-active="active" ng-switch-when="true">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm" data-translate="global.menu.home">Home</span>
