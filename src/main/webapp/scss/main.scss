@@ -339,3 +339,19 @@ ui bootstrap tweaks
 
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+/* ==========================================================================
+Navbar customization
+========================================================================== */
+
+body { 
+	padding-top: 40px; }
+	
+.navbar .navbar-nav-center {
+    display: inline-block;
+    float: none;
+}
+
+.navbar .navbar-collapse-center {
+    text-align: center;
+}
