@@ -80,15 +80,11 @@ public class RequestResource {
         Request result = requestRepository.save(request);
         
         // Save square value in request_service table
-        request.getServices().forEach(item -> {
-        	RequestServiceId requestServiceId = new RequestServiceId();
-        	requestServiceId.setRequestId(result.getId());
-        	requestServiceId.setServiceId(item.getId());
-        	RequestService requestService = new RequestService();
-        	requestService.setId(requestServiceId);
-        	requestService.setSquare(item.getSquare());
-        	requestServiceRepository.save(requestService);
-        });
+        if(result != null)
+        	request.getServices().forEach(item -> {
+	        	RequestService requestService = new RequestService(result.getId(), item.getId(), item.getSquare());
+	        	requestServiceRepository.save(requestService);
+	        });
         
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -121,7 +117,16 @@ public class RequestResource {
         // Set current date
         request.setLastModifiedDate(ZonedDateTime.now());
         
+        // Update request
         Request result = requestRepository.save(request);
+        
+        // Update square value in request_service table
+        if(result != null)
+        	request.getServices().forEach(item -> {
+	        	RequestService requestService = new RequestService(result.getId(), item.getId(), item.getSquare());
+	        	requestServiceRepository.save(requestService);
+	        });
+        
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, request.getId().toString()))
             .body(result);
@@ -153,6 +158,15 @@ public class RequestResource {
     public ResponseEntity<Request> getRequest(@PathVariable Long id) {
         log.debug("REST request to get Request : {}", id);
         Request request = requestRepository.findOne(id);
+        
+        // Set square for services
+        if(request != null)
+	        request.getServices().forEach(item -> {
+	        	RequestServiceId requestServiceId = new RequestServiceId(request.getId(), item.getId());
+	        	RequestService requestService = requestServiceRepository.findOne(requestServiceId);
+	        	item.setSquare(requestService.getSquare());
+	        });
+        
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(request));
     }
 

@@ -14,6 +14,15 @@ public class RequestServiceId implements Serializable {
 	
 	@Column(name = "service_id")	
 	private Long serviceId;
+	
+	public RequestServiceId() {
+		
+	}
+	
+	public RequestServiceId(Long requestId, Long serviceId) {
+		this.requestId = requestId;
+		this.serviceId = serviceId;
+	}
 
 	public Long getRequestId() {
 		return requestId;

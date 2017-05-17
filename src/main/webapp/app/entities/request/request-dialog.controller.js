@@ -19,7 +19,7 @@
         vm.services = Service.query();
         vm.serviceChange = serviceChange;
         vm.squareChange = squareChange;
-        vm.chosenServices = [];
+        vm.chosenServices = angular.copy(vm.request.services);
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -99,6 +99,6 @@
         	vm.request.total = total;
         }
         
-        serviceChange();
+        squareChange();
     }
 })();

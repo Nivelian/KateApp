@@ -23,6 +23,19 @@ public class RequestService implements Serializable {
 
 	@Column(name = "square")
 	private BigDecimal square;
+	
+	public RequestService() {
+		
+	}
+	
+	public RequestService(RequestServiceId id, BigDecimal square) {
+		this.id = id;
+		this.square = square;
+	}
+	
+	public RequestService(Long requestId, Long serviceId, BigDecimal square) {
+		this(new RequestServiceId(requestId, serviceId), square);
+	}
 
 	public RequestServiceId getId() {
 		return id;
