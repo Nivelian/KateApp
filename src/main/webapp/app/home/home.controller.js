@@ -26,6 +26,8 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+                if(vm.isAuthenticated() === true)
+                	$state.go('request');
             });
         }
         function register () {
