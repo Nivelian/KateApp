@@ -44,7 +44,10 @@
             "confirmpassword": "Подтверждение нового пароля",
             "confirmpassword.placeholder": "Подтвердите новый пароль",
             "email": "Email",
-            "email.placeholder": "Ваш email"
+            "email.placeholder": "Ваш email",
+            "showing": "Показано",
+            "of": "из",
+            "items": "записей"
         },
         "messages": {
             "info": {
