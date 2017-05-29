@@ -22,8 +22,8 @@
                     <th jh-sort-by="name"><span data-translate="kateApp.request.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th><span data-translate="kateApp.request.services">Services</span></th>
                     <th jh-sort-by="total"><span data-translate="kateApp.request.total">Total</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="lastModifiedDate"><span data-translate="kateApp.request.lastModifiedDate">Last Modified Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="user.login"><span data-translate="kateApp.request.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th has-authority="ROLE_ADMIN" jh-sort-by="lastModifiedDate"><span data-translate="kateApp.request.lastModifiedDate">Last Modified Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th has-authority="ROLE_ADMIN" jh-sort-by="user.login"><span data-translate="kateApp.request.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -37,8 +37,8 @@
                     	</div>
                 	</td>
                 	<td>{{request.total | number: 2}}</td>
-                    <td>{{request.lastModifiedDate | date:'medium'}}</td>
-                    <td>
+                    <td has-authority="ROLE_ADMIN">{{request.lastModifiedDate | date:'medium'}}</td>
+                    <td has-authority="ROLE_ADMIN">
                         {{request.user.login}}
                     </td>
                     <td class="text-right">

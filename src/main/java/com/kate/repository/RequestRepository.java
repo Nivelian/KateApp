@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * Spring Data JPA repository for the Request entity.
  */
-public interface RequestRepository extends JpaRepository<Request,Long> {
+public interface RequestRepository extends JpaRepository<Request,Long>, JpaSpecificationExecutor<Request> {
 
     /*@Query("select request from Request request where request.user.login = ?#{principal.username}")
     List<Request> findByUserIsCurrentUser();

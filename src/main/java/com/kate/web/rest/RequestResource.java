@@ -8,6 +8,7 @@ import com.kate.domain.User;
 import com.kate.repository.RequestRepository;
 import com.kate.repository.RequestServiceRepository;
 import com.kate.repository.UserRepository;
+import com.kate.repository.filter.RequestSpecification;
 import com.kate.security.SecurityUtils;
 import com.kate.web.rest.util.HeaderUtil;
 import com.kate.web.rest.util.PaginationUtil;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,7 +144,14 @@ public class RequestResource {
     @Timed
     public ResponseEntity<List<Request>> getAllRequests(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Requests");
-        Page<Request> page = requestRepository.findAll(pageable);
+        String login = SecurityUtils.getCurrentUserLogin();
+        Optional<User> optUser = userRepository.findOneByLogin(login);
+        User user = null;
+        if(optUser.isPresent() == Boolean.TRUE) {
+        	user = optUser.get();
+        }
+        Specification<Request> spec = RequestSpecification.build(user);
+        Page<Request> page = requestRepository.findAll(spec, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/requests");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
